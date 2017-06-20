@@ -96,7 +96,10 @@ ruleTester.run("semi", rule, {
 
         // https://github.com/eslint/eslint/issues/7782
         { code: "var a = b;\n/foo/.test(c)", options: ["never"] },
-        { code: "var a = b;\n`foo`", options: ["never"], parserOptions: { ecmaVersion: 6 } }
+        { code: "var a = b;\n`foo`", options: ["never"], parserOptions: { ecmaVersion: 6 } },
+
+        { code: "var beavis = b;\nvar d = c;", options: ["consistent"] },
+        { code: "var a = b\nvar d = c", options: ["consistent"] }
     ],
     invalid: [
         { code: "import * as utils from './utils'", output: "import * as utils from './utils';", parserOptions: { sourceType: "module" }, errors: [{ message: "Missing semicolon.", type: "ImportDeclaration", column: 33 }] },
@@ -188,6 +191,8 @@ ruleTester.run("semi", rule, {
                 "foo()",
                 ";[0,1,2].forEach(bar)"
             ].join("\n")
-        }
+        },
+        // { code: "var a = b;\nvar d = c", output: "var a = b;\nvar d = c;", options: ["consistent"] },
+        // { code: "var a = b;\nvar d = c;", output: "var a = b\nvar d = c", options: ["consistent"] }
     ]
 });
